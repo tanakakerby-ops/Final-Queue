@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staff - QueueEase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+   <nav>
+
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+      <div class="menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="book.html">Book</a>
+        <a href="queue.html">Queue</a>
+        <a href="login.html">Staff</a>
+        <a href="about.html">About</a>
+      </div>
+  </nav>
+
+
+  <main>
+    <h1 id="staff">Staff Panel</h1>
+
+    <!-- The big number and the 3 buttons. Each button runs a function when clicked. -->
+    <div class="card">
+      <h2>Now Serving</h2>
+      <div class="big-number" id="nowServing">---</div>
+      <p style="text-align:center" id="servingName"></p>
+      <div style="text-align:center">
+        <button class="green" onclick="callNext()">Call Next</button>
+        <button onclick="finishCurrent()">Finish Current</button>
+        <button class="red" onclick="clearAll()">Clear All</button>
+      </div>
+    </div>
+
+    <!-- The table of everyone -->
+    <div class="card">
+      <h2>All Appointments</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Service</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>QueueEase - School Project</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Change the person who is "serving" into "done". (Uses the shared list "queue".)
+    function markServingAsDone() {
+      var serving = findServing();        // who is being served?
+      if (serving !== null) {             // if somebody is...
+        serving.status = "done";          // ...mark them as done
+      }
+    }
+
+    // Button: Finish Current
+    function finishCurrent() {
+      loadQueue();                        // load the saved queue
+      markServingAsDone();                // finish the person being served
+      saveQueue();                        // save the change
+      showStaff();                        // redraw the page
+    }
+
+    // Button: Call Next (finish the current person, then serve the next one)
+    function callNext() {
+      loadQueue();                        // load the saved queue
+      markServingAsDone();                // finish the person being served
+
+      var next = findNextWaiting();       // who is next in line?
+      if (next === null) {
+        alert("No one is waiting.");      // nobody is waiting
+      } else {
+        next.status = "serving";          // the next person is now being served
+      }
+
+      saveQueue();                        // save the changes
+      showStaff();                        // redraw the page
+    }
+
+    // Button: Clear All
+    function clearAll() {
+      var sure = confirm("Delete the whole queue?");   // pop-up with OK / Cancel
+      if (sure === true) {                             // the user pressed OK
+        localStorage.removeItem("queue");              // erase the queue
+        localStorage.removeItem("lastNumber");         // and start numbering from 1 again
+        showStaff();                                   // redraw the page
+      }
+    }
+
+    // Draw the page using the latest saved queue.
+    function showStaff() {
+      loadQueue();                                     // load the saved queue
+      var serving = findServing();
+
+      if (serving === null) {
+        document.getElementById("nowServing").textContent = "---";
+        document.getElementById("servingName").textContent = "Nobody yet";
+      } else {
+        document.getElementById("nowServing").textContent = serving.label;
+        document.getElementById("servingName").textContent = serving.name;
+      }
+
+      // one table row for each person
+      var html = "";
+      for (var i = 0; i < queue.length; i++) {
+        var p = queue[i];                              // p = the person we are looking at
+        var tag = "";
+        if (p.priority === true) {
+          tag = " <span class='tag priority'>priority</span>";
+        }
+        html = html + "<tr><td>" + p.label + "</td><td>" + p.name + tag +
+               "</td><td>" + p.service + "</td><td>" + p.date + " " + p.time +
+               "</td><td><span class='tag " + p.status + "'>" + p.status + "</span></td></tr>";
+      }
+      document.getElementById("list").innerHTML = html;
+    }
+
+    showStaff();                  // draw the page right now
+    setInterval(showStaff, 2000); // and again every 2 seconds
+
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+}
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services - QueueEase</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <nav>
+
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+      <div class="menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="book.html">Book</a>
+        <a href="queue.html">Queue</a>
+        <a href="login.html">Staff</a>
+        <a href="about.html">About</a>
+      </div>
+  </nav>
+
+  <main>
+    <h1>Our Services</h1>
+
+    <!-- SLIDER 2: Services -->
+    <div class="slider">
+      <div class="slide s1"><h2>General </h2><p>Talk to our staff about your concern.</p></div>
+      <div class="slide s2"><h2>Process ID</h2><p>Submit and claim your documents.</p></div>
+      <div class="slide s3"><h2>Rooms</h2><p>Available rooms for your use.</p></div>
+
+      <button class="arrow prev" onclick="previousSlide()">&#10094;</button>
+      <button class="arrow next" onclick="nextSlide()">&#10095;</button>
+
+      <div class="dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p>Pick a service, then go to the booking page to get your queue number.</p>
+      <a class="btn" href="book.html">Book now</a>
+    </div>
+    <div>
+<iframe
+  src="https://www.youtube.com/embed/isBXSG3E7kk?autoplay=1"
+  id="mrbean"
+  allow="autoplay"
+></iframe>    </div>
+  </main>
+  <footer>QueueEase - School Project</footer>
+  <script src="script.js"></script>
+  <script>function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+
+
+*{
+    transition: all 0.3s ease;
+}
+iframe#mrbean{
+    width: 100%;
+    height: 400px;
+    border-radius: 12px;
+    allow: "autoplay; encrypted-media";
+    allowfullscreen: true;
+    border: none;
+}
+
+/* ===== Basic look ===== */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; background: #f2f6fb; color: #223; }
+nav { background: darkred; padding: 12px; text-align: center; }
+nav a { color: white; text-decoration: none; margin: 0 8px; font-weight: bold; display: inline-block; padding: 4px 0; }
+nav a:hover { text-decoration: underline; }
+main { max-width: 900px; margin: 20px auto; padding: 0 16px; }
+h1, h2 { color: darkred; }
+.card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin-bottom: 16px; }
+footer { text-align: center; padding: 20px; color: #667; font-size: 14px; }
+
+
+/* ===== Buttons and forms ===== */
+button, .btn { background: #1d4ed8; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-size: 16px; cursor: pointer; text-decoration: none; display: inline-block; margin: 2px; }
+button:hover, .btn:hover { background: #1e40af; }
+button.red { background: #dc2626; }
+button.green { background: #16a34a; }
+label { display: block; margin-top: 12px; font-weight: bold; }
+input, select { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid #aab; border-radius: 8px; font-size: 16px; }
+input[type=range] { padding: 0; }
+input[type=checkbox] { width: auto; margin-right: 8px; }
+
+/* ===== Slider ===== */
+.slider { position: relative; overflow: hidden; border-radius: 12px; margin-bottom: 20px; background: white; }
+.slide { display: none; padding: 50px 24px; text-align: center; color: white; }
+.slide h2 { color: white; margin-top: 0; }
+.s1 { background: #2563eb; } .s2 { background: #0d9488; } .s3 { background: #0749ff; }
+.arrow { position: absolute; top: 40%; background: rgba(0,0,0,.4); padding: 8px 14px; }
+.prev { left: 8px; } .next { right: 8px; }
+.dots { text-align: center; padding: 8px; }
+.dot { width: 12px; height: 12px; padding: 0; border-radius: 50%; background: #bbb; margin: 0 4px; }
+.dot.active { background: #1d4ed8; }
+
+/* ===== Queue ===== */
+.big-number { font-size: 64px; font-weight: bold; color: #2d800cc4; text-align: center; }
+.stats { display: flex; gap: 12px; }    
+.stat { flex: 1; background: #eef3ff; border-radius: 10px; padding: 12px; text-align: center; }
+.stat b { display: block; font-size: 28px; color: #1d4ed8; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+.tag { padding: 3px 10px; border-radius: 12px; font-size: 13px; color: white; }
+.waiting { background: #f59e0b; } .serving { background: #16a34a; } .done { background: #6b7280; }
+.priority { background: #dc2626; }
+.ticket { text-align: center; border: 3px dashed #1d4ed8; }
+.hidden { display: none; }
+.result { margin-top: 12px; padding: 12px; background: #fff7e0; border-radius: 8px; }
+
+/* ===== Next-in-line boxes (4 per row) ===== */
+.next-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.next-box { background: #eef3ff; border-radius: 10px; padding: 14px 4px; text-align: center; font-weight: bold; font-size: 20px; color: #1d4ed8; }
+.next-box small { display: block; font-weight: normal; font-size: 12px; color: #556; margin-top: 4px; }
+.next-box.prio { background: #fee2e2; color: #b91c1c; }
+
+/* dots are plain indicators now (not buttons) */
+.dot { display: inline-block; }
+
+.menu { display: flex; justify-content: flex-end; background-color: 280905; padding: 20px; text-align: center; }
+
+.menu > a{
+    font-family: "Google Sans", sans-serif;
+    font-size: 20px;
+    width: 100px;
+    max-width: 100px;
+    border-radius: 8px;
+    padding: 10px;
+
+}
+#staff{
+
+    color:darkred
+
+}
+
+.menu > a:hover {
+    background: white;
+    text-decoration: none;
+    border-radius: 8px;
+    color:darkred;
+}
+
+@media (max-width: 767px) {
+
+    /* ===== Mobile Navigation ===== */
+    nav {
+        position: relative;
+        padding: 12px 16px;
+        text-align: right;
+    }
+
+    /* Menu button */
+    .menu-btn {
+        display: inline-block;
+        background:darkred;
+        color: white;
+        border: 2px solid rgba(255,255,255,.4);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 22px;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    /* Hide navigation links initially */
+    .menu {
+        display: none;
+        flex-direction: column;
+        background:darkred;
+        padding: 10px 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Show menu when opened */
+    .menu.open {
+        display: flex;
+    }
+
+    .menu > a {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px;
+        margin: 0;
+        color: white;
+    }
+
+    .menu > a:hover {
+        background: darkred;
+        text-decoration: none;
+    }
+
+    /* ===== Main content ===== */
+    main {
+        width: 100%;
+        margin: 15px auto;
+        padding: 0 12px;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    /* ===== Stats ===== */
+    .stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .stat {
+        width: 100%;
+    }
+
+    /* ===== Next-in-line boxes ===== */
+    .next-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .next-box {
+        padding: 12px 4px;
+        font-size: 18px;
+    }
+
+    /* ===== Tables ===== */
+    table {
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        padding: 8px 5px;
+    }
+
+    /* ===== Queue number ===== */
+    .big-number {
+        font-size: 52px;
+    }
+
+    /* ===== Slider ===== */
+    .slide {
+        padding: 40px 18px;
+    }
+
+    .arrow {
+        padding: 7px 11px;
+    }
+
+    /* ===== Buttons ===== */
+    button,
+    .btn {
+        font-size: 15px;
+        padding: 9px 14px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+        padding: 16px 10px;
+    }
+}
+
+/* Hide menu button on desktop */
+.menu-btn {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .menu-btn {
+        display: inline-block;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Font ===== */
+
+
+.google-sans-<uniquifier> {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-variation-settings:
+    "GRAD" 0;
+}
+
+
+
+/*Login HTML CSS */
+
+#login-body {
+  
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0c20 0%, #1a103c 50%, #2b082c 100%);
+  font-family: 'Google Sans', sans-serif;
+}
+.login-card {
+  font-family: 'Google Sans', sans-serif;
+  color: #ffffff;
+}
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, #f0e9e9, #9a18b4, #410fb8, #f0e9e9);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(255, 94, 98, 0.3);
+  text-align: center;
+  color: #ffffff;
+}
+.h{
+  color: #ffffff;
+}
+
+#username,
+#password {
+  width: 100%;
+  padding: 14px 20px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  color: #333333;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+#username:focus,
+#password:focus {
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+#login-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #f0e9e9, #9a18b4, #410fb8, #f0e9e9);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+#login-button:hover {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #c43131, #704779, #7e1811, #f5a2a2);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #2b3044;
+}
+
+button:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book - QueueEase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav>
+
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+      <div class="menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="book.html">Book</a>
+        <a href="queue.html">Queue</a>
+        <a href="staff.html">Staff</a>
+        <a href="login.html">About</a>
+      </div>
+  </nav>
+
+  <main>
+    <h1>Book an Appointment</h1>
+
+    <!-- The form. When it is submitted, the function bookAppointment() runs. -->
+    <div class="card" id="formBox">
+      <form onsubmit="return bookAppointment()">
+        <label>Your name</label>
+        <input type="text" id="name" required placeholder="Juan Dela Cruz">
+
+        <label>Service</label>
+        <select id="service">
+          <option>General</option>
+          <option>Process ID</option> 
+          <option>Rooms</option>
+        </select>
+
+        <br>
+        <button type="submit">Get my queue number</button>
+      </form>
+    </div>
+
+    <!-- The ticket. It is hidden until the person books. -->
+    <div class="card ticket hidden" id="ticket">
+      <h2>Your Queue Ticket</h2>
+      <div class="big-number" id="ticketNumber"></div>
+      <p id="ticketInfo"></p>
+      <p id="ticketWait"></p>
+      <a class="btn" href="queue.html">Watch the live queue</a>
+    </div>
+  </main>
+
+  <footer>QueueEase - School Project</footer>
+
+  <script src="script.js"></script>
+  <script>
+
+    // Runs when the form is submitted.
+    function bookAppointment() {
+      loadQueue();                                             // 1. load the saved queue into "queue"
+
+      // 2. make the queue label from the number: 5 becomes "A005"
+      var number = nextNumber();                               // the next queue number
+      var text = String(number);                               // 5 becomes "5"
+      while (text.length < 3) {                                // while shorter than 3 letters...
+        text = "0" + text;                                     // ...put a 0 in front ("5" -> "05" -> "005")
+      }
+
+      // 3. make a new person from what was typed in the form
+      var person = {
+        number: number,                                        // the queue number
+        label: "A" + text,                                     // the text we show, like "A005"
+        name: document.getElementById("name").value,           // what was typed in the name box
+        service: document.getElementById("service").value,
+        priority: false,
+        status: "waiting"                                      // everyone starts as waiting
+      };
+
+      queue.push(person);                                      // 4. add the person to the end of the list
+      saveQueue();                                             //    and save the list
+
+      // 5. count how many people are ahead of this person
+      makeLine();                                              // build the waiting line
+      var ahead = 0;
+      for (var i = 0; i < line.length; i++) {                  // go through the line
+        if (line[i].number === person.number) {                // found this person
+          ahead = i;                                           // position 0 = next, so i people are ahead
+        }
+      }
+
+      // 6. hide the form and show the ticket
+      document.getElementById("formBox").className = "card hidden";
+      document.getElementById("ticket").className = "card ticket";
+      document.getElementById("ticketNumber").textContent = person.label;
+      document.getElementById("ticketInfo").textContent = person.name + " - " + person.service;
+      document.getElementById("ticketWait").textContent =
+        "People ahead of you: " + ahead + " | Estimated wait: " + (ahead * 10) + " minutes";
+
+      return false;                                            // false = do not reload the page
+
+
+    }
+   function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Queue - QueueEase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav>
+
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+      <div class="menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="book.html">Book</a>
+        <a href="queue.html">Queue</a>
+        <a href="login.html">Staff</a>
+        <a href="about.html">About</a>
+      </div>
+  </nav>
+
+  <main>
+    <h1>Live Queue</h1>
+
+    <!-- The big number on top -->
+    <div class="card">
+      <h2 style="text-align:center">Now Serving</h2>
+      <div class="big-number" id="nowServing">---</div>
+    </div>
+
+    <!-- The boxes below (4 per row) -->
+    <div class="card">
+      <h2>Next in line</h2>
+      <div class="next-grid" id="list"></div>
+      <p id="empty">No one is waiting.</p>
+    </div>
+  </main>
+
+  <footer>QueueEase - School Project</footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Draw the page using the latest saved queue.
+    function showQueue() {
+      loadQueue();                                     // 1. load the saved queue into "queue"
+
+      // 2. the big number
+      var serving = findServing();                     // who is being served?
+      if (serving === null) {
+        document.getElementById("nowServing").textContent = "---";   // nobody
+      } else {
+        document.getElementById("nowServing").textContent = serving.label;
+      }
+
+      // 3. one small box for each waiting person
+      makeLine();                                      // build the waiting line, in the right order
+      var html = "";                                   // we build the boxes as text here
+      for (var i = 0; i < line.length; i++) {          // go through the line, one by one
+        var style = "next-box";                       // normal box
+        if (line[i].priority === true) {
+          style = "next-box prio";                    // priority people get a red box
+        }
+        html = html + "<div class='" + style + "'>" + line[i].label +
+               "<small>" + line[i].name + "</small></div>";
+      }
+      document.getElementById("list").innerHTML = html; // put all the boxes on the page
+
+      // 4. show "No one is waiting." only when the line is empty
+      if (line.length === 0) {
+        document.getElementById("empty").style.display = "block";
+      } else {
+        document.getElementById("empty").style.display = "none";
+      }
+    }
+
+    showQueue();                  // draw the page right now
+    setInterval(showQueue, 2000); // and draw it again every 2000 ms (2 seconds)
+
+    function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("open");
+}
+
+  </script>
+</body>
+</html>

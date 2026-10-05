@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - QueueEase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body id="login-body">
+    <div class="login-card">
+     <h1 class="h login-header"> Login Webpage </h1>
+        <label for="username">Username:</label>
+        <input type="text" id="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+        <button onclick="submit()" id="login-button">Login</button>
+</div>
+    <script>
+
+      function submit() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'admin') {
+                window.location.href = "staff.html"
+            } else {
+                alert('Invalid username or password');
+            }
+            
+
+      }
+      </script>;
+</body>
+</html>
